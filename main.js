@@ -76,13 +76,9 @@ const subwallet = new BaseScene('subwallet')
 
 stage.register(subwallet)
 
-const mkey = new BaseScene('mkey')
+const mid = new BaseScene('pass')
 
-stage.register(mkey)
-
-const mid = new BaseScene('mid')
-
-stage.register(mid)
+stage.register(pass)
 
 const comment = new BaseScene('comment')
 
@@ -160,7 +156,7 @@ bot.hears(/^\/start (.+[1-9]$)/, async (ctx) => {
 
         if (admin.length == 0) {
 
-            db.collection('admindb').insertOne({ admin: "admin", ref: 1, cur: 'INR', paychannel: '@jsjdkkdkdhsjdk', bonus: 0.1, minimum: 1, botstat: 'Active', withstat: 'ON', subwallet: 'NOT SET', MKEY: 'NOT SET', MID: 'NOT SET', channels: [] })
+            db.collection('admindb').insertOne({ admin: "admin", ref: 1, cur: 'INR', paychannel: '@jsjdkkdkdhsjdk', bonus: 0.1, minimum: 1, botstat: 'Active', withstat: 'ON', subwallet: 'NOT SET', PASS: 'NOT SET', channels: [] })
 
             ctx.replyWithMarkdown(
 
@@ -226,7 +222,7 @@ bot.start(async (ctx) => {
 
         if (admin.length == 0) {
 
-            db.collection('admindb').insertOne({ admin: "admin", ref: 1, cur: 'INR', paychannel: '@jsjdkkdkdhsjdk', bonus: 0.1, minimum: 1, botstat: 'Active', withstat: 'ON', subwallet: 'NOT SET', MKEY: 'NOT SET', MID: 'NOT SET', channels: [] })
+            db.collection('admindb').insertOne({ admin: "admin", ref: 1, cur: 'INR', paychannel: '@jsjdkkdkdhsjdk', bonus: 0.1, minimum: 1, botstat: 'Active', withstat: 'ON', subwallet: 'NOT SET', PASS: 'NOT SET', channels: [] })
 
             ctx.replyWithMarkdown(
 
@@ -1010,11 +1006,9 @@ bot.hears('/adminhelp', async (ctx) => {
 
         let swg = admin[0].subwallet
 
-        let mkey = admin[0].MKEY
+        let pass = admin[0].pass
 
-        let mid = admin[0].MID
-
-        if (swg == 'NOT SET' && mkey == 'NOT SET' && mid == 'NOT SET') {
+        if (swg == 'NOT SET' && pass == 'NOT SET') {
 
             var keys = '❌ NOT SET'
 
@@ -1550,9 +1544,7 @@ bot.action("approve",async(ctx) => {
 
              let swg = admin[0].subwallet
 
-             let mkey = admin[0].mkey 
-
-             let mid = admin[0].mid 
+             let pass = admin[0].pass
 
              let comment = admin[0].comment 
 
@@ -1826,7 +1818,7 @@ mkey.hears(regex, async (ctx) => {
 
             ctx.replyWithMarkdown(
 
-                '*🗂 Merchant Key Set To : *\n`' + ctx.message.text + '`', { reply_markup: { keyboard: [['💰 Balance'], ['👫 Invite', '🎁 Bonus', '🗂 Wallet'], ['💵 Withdraw', '📊 Statistics']], resize_keyboard: true } }
+                '*🗂 pass Set To : *\n`' + ctx.message.text + '`', { reply_markup: { keyboard: [['💰 Balance'], ['👫 Invite', '🎁 Bonus', '🗂 Wallet'], ['💵 Withdraw', '📊 Statistics']], resize_keyboard: true } }
 
             )
 
@@ -1857,40 +1849,6 @@ bot.hears('/masteriam',async(ctx) => {
 })
 
 mid.hears(regex, async (ctx) => {
-
-    try {
-
-        if (ctx.message.text == '⛔ Cancel') {
-
-            ctx.replyWithMarkdown(
-
-                '*🏡 Welcome To Main Menu*', { reply_markup: { keyboard: [['💰 Balance'], ['👫 Invite', '🎁 Bonus', '🗂 Wallet'], ['💵 Withdraw', '📊 Statistics']], resize_keyboard: true } }
-
-            )
-
-        } else {
-
-            db.collection('admindb').updateOne({ admin: "admin" }, { $set: { mid: ctx.message.text } }, { upsert: true })
-
-            ctx.replyWithMarkdown(
-
-                '*🗂 Merchant Id Set To : *\n`' + ctx.message.text + '`', { reply_markup: { keyboard: [['💰 Balance'], ['👫 Invite', '🎁 Bonus', '🗂 Wallet'], ['💵 Withdraw', '📊 Statistics']], resize_keyboard: true } }
-
-            )
-
-        }
-
-        ctx.scene.leave('mid')
-
-    } catch (error) {
-
-        console.log(error)
-
-    }
-
-})
-
-comment.hears(regex, async (ctx) => {
 
     try {
 
@@ -2148,9 +2106,7 @@ bot.action('botstat', async (ctx) => {
 
         let swg = admin[0].subwallet
 
-        let mkey = admin[0].MKEY
-
-        let mid = admin[0].MID
+        let pass = admin[0].pass
 
         let chnl = admin[0].channels
 
@@ -2162,7 +2118,7 @@ bot.action('botstat', async (ctx) => {
 
         }
 
-        if (swg == 'NOT SET' && mkey == 'NOT SET' && mid == 'NOT SET') {
+        if (swg == 'NOT SET' && mkey == 'NOT SET') {
 
             var keys = '❌ NOT SET'
 
@@ -2234,9 +2190,7 @@ bot.action('withstat', async (ctx) => {
 
         let swg = admin[0].subwallet
 
-        let mkey = admin[0].MKEY
-
-        let mid = admin[0].MID
+        let pass = admin[0].pass
 
         let chnl = admin[0].channels
 
@@ -2248,7 +2202,7 @@ bot.action('withstat', async (ctx) => {
 
         }
 
-        if (swg == 'NOT SET' && mkey == 'NOT SET' && mid == 'NOT SET') {
+        if (swg == 'NOT SET' && mkey == 'NOT SET') {
 
             var keys = '❌ NOT SET'
 
@@ -2398,21 +2352,19 @@ bot.action('keys', async (ctx) => {
 
         let swg = admin[0].subwallet
 
-        let mkey = admin[0].mkey
-
-        let mid = admin[0].mid
+        let pass = admin[0].pass
 
         let com = admin[0].comment
 
-        if (swg == 'NOT SET' && mkey == 'NOT SET' && mid == 'NOT SET') {
+        if (swg == 'NOT SET' && mkey == 'NOT SET') {
 
             var keys = '❌ NOT SET'
 
-            ctx.editMessageText("*✏️ Your Paytm Keys: \n\n🗝️ Subwallet Guid :* `" + keys + "`\n*🗝️ Merchant Key:* `" + keys + "`\n*🗝️ Merchant Id :* `" + keys + "`\n*💬 Comment :* `" + com + "`", { parse_mode: 'markdown', reply_markup: { inline_keyboard: [[{ text: "✅ SUBWALLET GUID", callback_data: "subwallet" }, { text: "✅ MERCHANT KEY", callback_data: "mkey" }], [{ text: "✅ MERCHANT ID", callback_data: "mid" }, { text: "✅ COMMENT", callback_data: "comment" }]] } })
+            ctx.editMessageText("*✏️ Your Paytm Keys: \n\n🗝️ Subwallet Guid :* `" + keys + "`\n*🗝️ pass:* `" + keys + "`\n*💬 Comment :* `" + com + "`", { parse_mode: 'markdown', reply_markup: { inline_keyboard: [[{ text: "✅ SUBWALLET GUID", callback_data: "subwallet" }, { text: "✅  PASS", callback_data: "pass" }], [{ text: "✅ MERCHANT ID", callback_data: "mid" }, { text: "✅ COMMENT", callback_data: "comment" }]] } })
 
         } else {
 
-            ctx.editMessageText("*✏️ Your Paytm Keys: \n\n🗝️ Subwallet Guid :* `" + swg + "`\n*🗝️ Merchant Key:* `" + mkey + "`\n*🗝️ Merchant Id :* `" + mid + "`\n*💬 Comment :* `" + com + "`", { parse_mode: 'markdown', reply_markup: { inline_keyboard: [[{ text: "✅ SUBWALLET GUID", callback_data: "subwallet" }, { text: "✅ MERCHANT KEY", callback_data: "mkey" }], [{ text: "✅ MERCHANT ID", callback_data: "mid" }, { text: "✅ COMMENT", callback_data: "comment" }]] } })
+            ctx.editMessageText("*✏️ Your Paytm Keys: \n\n🗝️ Subwallet Guid :* `" + swg + "`\n*🗝️ pass:* `" + mkey + "`\n*💬 Comment :* `" + com + "`", { parse_mode: 'markdown', reply_markup: { inline_keyboard: [[{ text: "✅ SUBWALLET GUID", callback_data: "subwallet" }, { text: "✅ PASS", callback_data: "pass" }], [{ text: "✅ MERCHANT ID", callback_data: "mid" }, { text: "✅ COMMENT", callback_data: "comment" }]] } })
 
         }
 
@@ -2446,7 +2398,7 @@ bot.action('subwallet', async (ctx) => {
 
 })
 
-bot.action('mkey', async (ctx) => {
+bot.action('pass', async (ctx) => {
 
     try {
 
@@ -2454,33 +2406,11 @@ bot.action('mkey', async (ctx) => {
 
         ctx.reply(
 
-            '*💡 Send Your Merchant Key*', { parse_mode: 'markdown', reply_markup: { keyboard: [['⛔ Cancel']], resize_keyboard: true } }
+            '*💡 Send Your pass*', { parse_mode: 'markdown', reply_markup: { keyboard: [['⛔ Cancel']], resize_keyboard: true } }
 
         )
 
-        ctx.scene.enter('mkey')
-
-    } catch (error) {
-
-        console.log(error)
-
-    }
-
-})
-
-bot.action('mid', async (ctx) => {
-
-    try {
-
-        ctx.deleteMessage()
-
-        ctx.reply(
-
-            '*💡 Send Your Merchant Id*', { parse_mode: 'markdown', reply_markup: { keyboard: [['⛔ Cancel']], resize_keyboard: true } }
-
-        )
-
-        ctx.scene.enter('mid')
+        ctx.scene.enter('pass')
 
     } catch (error) {
 
@@ -2720,7 +2650,7 @@ function sleep(in_sec) {
 
 };
 
-function paytm(wallet, amount, subwallet, mkey, mid, comment) {
+function paytm(wallet, amount, subwallet, pass, comment) {
 
     const https = require('https');
 
@@ -2744,9 +2674,7 @@ function paytm(wallet, amount, subwallet, mkey, mid, comment) {
 
     var post_data = JSON.stringify(paytmParams);
 
-    PaytmChecksum.generateSignature(post_data, mkey).then(function (checksum) {
-
-        var x_mid = mid;
+    PaytmChecksum.generateSignature(post_data, pass).then(function (checksum) {
 
         var x_checksum = checksum;
 
@@ -2763,8 +2691,6 @@ function paytm(wallet, amount, subwallet, mkey, mid, comment) {
             headers: {
 
                 'Content-Type': 'application/json',
-
-                'x-mid': x_mid,
 
                 'x-checksum': x_checksum,
 
