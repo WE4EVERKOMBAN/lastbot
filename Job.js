@@ -67,7 +67,7 @@ const buttonsLimit = {
 bot.use(session())
 bot.use(stage.middleware())
 //CONNECT TO MONGO
-mongo.connect('mongodb+srv://Data1:Data1@cluster0.ib7yg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useUnifiedTopology: true }, (err, client) => {
+mongo.connect('mongo_url', { useUnifiedTopology: true }, (err, client) => {
     if (err) {
         console.log(err);
     }
