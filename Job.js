@@ -6,7 +6,7 @@ const { BaseScene, Stage } = Scenes
 const { enter, leave } = Stage
 const stage = new Stage()
 const rateLimit = require('telegraf-ratelimit')
-var bot_token = '5206099855:AAH2dz5_SLtEwYoSsNkQFIGLEmofZiaAKcI'; //YOUR BOT TOKEN HERE
+var bot_token = '5525434218:AAGR6DiC6eAQJBv50MYurV4VDNPn3T1X3Ag'; //YOUR BOT TOKEN HERE
 const bot = new Telegraf(bot_token);
 let db;
 const balance = new BaseScene('balance')
